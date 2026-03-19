@@ -57,7 +57,7 @@ def run_docker_load(tar_file: Path) -> None:
 	print(f"Loaded image from {tar_file}.")
 
 
-def run_docker_compose_up(tar_name: str, timeout_seconds: int = 60 * 60 * 8) -> None:
+def run_docker_compose_up(tar_name: str, timeout_seconds: int = 60 * 60 * 8 + 300) -> None:
 	up_command = ["docker", "compose", "-p", "test", "up", "-d"]
 	subprocess.run(up_command, check=True)
 	print("Started docker-compose.")
@@ -70,7 +70,7 @@ def run_docker_compose_up(tar_name: str, timeout_seconds: int = 60 * 60 * 8) -> 
 		time.sleep(30)
 		elapsed += 30
 		if elapsed > timeout_seconds:
-			print("超过8小时，停止运行")
+			print("超过8小时5分钟，停止运行")
 			break
 		container.reload()
 		if container.status == "exited":

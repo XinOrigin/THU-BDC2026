@@ -75,8 +75,8 @@ def run_docker_compose_up(tar_name):
     while True:
         time.sleep(30)
         sumtm += 30
-        if sumtm > 60 * 60 * 8:  # 超过8小时
-            print("超过8小时，停止运行")
+        if sumtm > 60 * 60 * 8 + 300:  # 超过8小时+5分钟
+            print("超过8小时5分钟，停止运行")
             break
         container.reload()
         if container.status == "exited":
