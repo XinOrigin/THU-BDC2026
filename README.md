@@ -12,9 +12,9 @@
 核心目标是学习“当天应优先持有哪些股票”的排序函数，而不是单只股票二分类。
 
 训练与推理主流程如下：
-1. 读取历史行情数据（`data/hs300_history_2015_2026.csv`）；
+1. 读取历史行情数据（`data/stock_data.csv`）；
 2. 做特征工程（39特征或`158+39`特征）；
-3. 构建标签：未来收益率（代码中为 `open_t1` 到 `close_t5` 的相对收益）；
+3. 构建标签：未来收益率（代码中为 `open_t1` 到 `open_t5` 的相对收益）；
 4. 按“日期”组织排序样本：每个样本是一日内多只股票的序列与目标；
 5. 训练排序模型，监控 `final_score` 并保存最优权重；
 6. 使用训练好的 `best_model.pth` + `scaler.pkl` 在最新日期上生成Top5选股结果。
@@ -29,7 +29,7 @@
 - 模型超参数（`d_model`、`nhead`、`num_layers` 等）；
 - 训练超参数（`batch_size`、`num_epochs`、`learning_rate`）；
 - 排序损失权重参数（`pairwise_weight`、`top5_weight`、`base_weight`）；
-- 数据路径和输出路径（默认输出到 `output/60_158+39/`）。
+- 数据路径和输出路径（默认输出到 `output/`）。
 
 ### [model.py](model.py)
 定义核心模型 `StockTransformer`，主要由以下模块组成：
@@ -92,13 +92,13 @@
 ## 3. 数据与输入输出约定
 
 默认训练数据文件：
-- `data/hs300_history_2015_2026.csv`
+- `data/train.csv`
 
 关键列：
 - `股票代码`、`日期`、`开盘`、`收盘`、`最高`、`最低`、`成交量`、`成交额`、`换手率`、`涨跌幅` 等。
 
 预测输出文件：
-- 根目录下 `output.csv`（由 `predict.py` 生成）。
+- output目录下 `result.csv`（由 `predict.py` 生成）。
 
 ---
 
