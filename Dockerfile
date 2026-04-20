@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ta-lib C library
-# Source: http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz
 RUN wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
     tar -xzf ta-lib-0.4.0-src.tar.gz && \
     cd ta-lib && \
@@ -23,21 +22,21 @@ RUN wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Set working directory
 WORKDIR /app
 
-# Copy dependency files
-COPY pyproject.toml uv.lock ./
+# 【修改点 1】不再复制旧的 uv.lock 账本，只复制我们改好的 pyproject.toml
+COPY pyproject.toml ./
 
-# Install dependencies
-RUN uv sync --frozen
+# 强制使用清华源
+ENV UV_DEFAULT_INDEX="https://pypi.tuna.tsinghua.edu.cn/simple"
 
-# Copy the application code
+# 【修改点 2】去掉 --frozen 限制，让它根据清华源重新生成下载链接！
+RUN uv sync
+
 COPY . .
 
 # Set environment to use the virtual environment
 ENV PATH="/app/.venv/bin:$PATH"
 ENV LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
 
-# Keep container running idle; execute train/predict manually via docker exec.
 CMD ["sleep", "infinity"]
