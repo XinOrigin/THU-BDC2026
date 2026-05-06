@@ -1,23 +1,39 @@
-# 配置参数
-sequence_length = 60
+# V3 Config - 融合 V1 数据管道 + V2 网络稳定性
+# 核心改变：废除截面归一化，恢复 margin=0.5，锁定197维特征
+
+sequence_length = 50
 feature_num = '158+39'
+temperature = 1.0
+
 config = {
-    'sequence_length': sequence_length,   # 使用过去60个交易日的数据（排序任务可以用稍短的序列）
-    'd_model': 256,          # Transformer输入维度
-    'nhead': 4,             # 注意力头数量
-    'num_layers': 3,        # Transformer层数
-    'dim_feedforward': 512, # 前馈网络维度
-    'batch_size': 4,        # 排序任务batch_size可以小一些，因为每个batch包含更多股票
-    'num_epochs': 50,       # 排序任务可能需要更多epochs
-    'learning_rate': 1e-5,  # 稍微降低学习率
-    'dropout': 0.1,
+    'sequence_length': sequence_length,
+    'd_model': 256,           # V2 架构
+    'nhead': 16,              # V2 架构
+    'num_layers': 3,          # V2 架构
+    'dim_feedforward': 512,
+
+    # V2 防OOM设计
+    'batch_size': 8,          # V2 降至 8 防OOM
+    'accumulation_steps': 4, # V2 梯度累加，effective batch=32
+
+    # V2 网络稳定性
+    'dropout': 0.15,          # V2 实测不过拟合
+
+    # V1 回归
+    'margin': 0.5,            # 【关键】恢复V1默认值，替换V2的0.05
+    'learning_rate': 3e-05,   # V2 实测稳定值
+
+    'num_epochs': 100,        # V3 充分训练（守夜人长跑）
     'feature_num': feature_num,
     'max_grad_norm': 5.0,
 
-    'pairwise_weight': 1, # 配对损失权重
-    'base_weight': 1.0, # 非top-k样本权重
-    'top5_weight': 2.0, # top-5样本权重（应大于base_weight）
+    'pairwise_weight': 1,
+    'base_weight': 1.0,
+    'top5_weight': 2.0,
 
-    'output_dir': f'./model/{sequence_length}_{feature_num}',
+    'early_stopping_patience': 20,  # 守夜人长跑防护
+    'warmup_epochs': 3,             # V3 增加预热
+
+    'output_dir': f'./models/v3_{feature_num}',
     'data_path': './data',
 }

@@ -27,9 +27,11 @@ def set_seed(seed=42):
     os.environ['PYTHONHASHSEED'] = str(seed)
 
 feature_cloums_map = {
-    '39': ['instrument','开盘', '收盘', '最高', '最低', '成交量', '成交额', '振幅', '涨跌额', '换手率', '涨跌幅','sma_5', 'sma_20', 'ema_12', 'ema_26', 'rsi', 'macd', 'macd_signal', 'volume_change', 'obv','volume_ma_5', 'volume_ma_20', 'volume_ratio', 'kdj_k', 'kdj_d', 'kdj_j', 'boll_mid', 'boll_std', 'atr_14', 'ema_60', 'volatility_10', 'volatility_20', 'return_1', 'return_5', 'return_10',  'high_low_spread', 'open_close_spread', 'high_close_spread', 'low_close_spread'],
+    '39': ['开盘', '收盘', '最高', '最低', '成交量', '成交额', '振幅', '涨跌额', '换手率', '涨跌幅','sma_5', 'sma_20', 'ema_12', 'ema_26', 'rsi', 'macd', 'macd_signal', 'volume_change', 'obv','volume_ma_5', 'volume_ma_20', 'volume_ratio', 'kdj_k', 'kdj_d', 'kdj_j', 'boll_mid', 'boll_std', 'atr_14', 'ema_60', 'volatility_10', 'volatility_20', 'return_1', 'return_5', 'return_10',  'high_low_spread', 'open_close_spread', 'high_close_spread', 'low_close_spread'],
 
-    '158+39': ['instrument','开盘', '收盘', '最高', '最低', '成交量', '成交额', '振幅', '涨跌额', '换手率', '涨跌幅','KMID', 'KLEN', 'KMID2', 'KUP', 'KUP2', 'KLOW', 'KLOW2', 'KSFT', 'KSFT2', 'OPEN0', 'HIGH0', 'LOW0', 'VWAP0', 'ROC5', 'ROC10', 'ROC20', 'ROC30', 'ROC60', 'MA5', 'MA10', 'MA20', 'MA30', 'MA60', 'STD5', 'STD10', 'STD20', 'STD30', 'STD60', 'BETA5', 'BETA10', 'BETA20', 'BETA30', 'BETA60', 'RSQR5', 'RSQR10', 'RSQR20', 'RSQR30', 'RSQR60', 'RESI5', 'RESI10', 'RESI20', 'RESI30', 'RESI60', 'MAX5', 'MAX10', 'MAX20', 'MAX30', 'MAX60', 'MIN5', 'MIN10', 'MIN20', 'MIN30', 'MIN60', 'QTLU5', 'QTLU10', 'QTLU20', 'QTLU30', 'QTLU60', 'QTLD5', 'QTLD10', 'QTLD20', 'QTLD30', 'QTLD60', 'RANK5', 'RANK10', 'RANK20', 'RANK30', 'RANK60', 'RSV5', 'RSV10', 'RSV20', 'RSV30', 'RSV60', 'IMAX5', 'IMAX10', 'IMAX20', 'IMAX30', 'IMAX60', 'IMIN5', 'IMIN10', 'IMIN20', 'IMIN30', 'IMIN60', 'IMXD5', 'IMXD10', 'IMXD20', 'IMXD30', 'IMXD60', 'CORR5', 'CORR10', 'CORR20', 'CORR30', 'CORR60', 'CORD5', 'CORD10', 'CORD20', 'CORD30', 'CORD60', 'CNTP5', 'CNTP10', 'CNTP20', 'CNTP30', 'CNTP60', 'CNTN5', 'CNTN10', 'CNTN20', 'CNTN30', 'CNTN60', 'CNTD5', 'CNTD10', 'CNTD20', 'CNTD30', 'CNTD60', 'SUMP5', 'SUMP10', 'SUMP20', 'SUMP30', 'SUMP60', 'SUMN5', 'SUMN10', 'SUMN20', 'SUMN30', 'SUMN60', 'SUMD5', 'SUMD10', 'SUMD20', 'SUMD30', 'SUMD60', 'VMA5', 'VMA10', 'VMA20', 'VMA30', 'VMA60', 'VSTD5', 'VSTD10', 'VSTD20', 'VSTD30', 'VSTD60', 'WVMA5', 'WVMA10', 'WVMA20', 'WVMA30', 'WVMA60', 'VSUMP5', 'VSUMP10', 'VSUMP20', 'VSUMP30', 'VSUMP60', 'VSUMN5', 'VSUMN10', 'VSUMN20', 'VSUMN30', 'VSUMN60', 'VSUMD5', 'VSUMD10', 'VSUMD20', 'VSUMD30', 'VSUMD60','sma_5', 'sma_20', 'ema_12', 'ema_26', 'rsi', 'macd', 'macd_signal', 'volume_change', 'obv', 'volume_ma_5', 'volume_ma_20', 'volume_ratio', 'kdj_k', 'kdj_d', 'kdj_j', 'boll_mid', 'boll_std', 'atr_14', 'ema_60', 'volatility_10', 'volatility_20', 'return_1', 'return_5', 'return_10',  'high_low_spread', 'open_close_spread', 'high_close_spread', 'low_close_spread']
+    # 158 Alpha 因子 + 39 技术指标 = 197 特征总数
+    '158+39': ['开盘', '收盘', '最高', '最低', '成交量', '成交额', '振幅', '涨跌额', '换手率', '涨跌幅','KMID', 'KLEN', 'KMID2', 'KUP', 'KUP2', 'KLOW', 'KLOW2', 'KSFT', 'KSFT2', 'OPEN0', 'HIGH0', 'LOW0', 'VWAP0', 'ROC5', 'ROC10', 'ROC20', 'ROC30', 'ROC60', 'MA5', 'MA10', 'MA20', 'MA30', 'MA60', 'STD5', 'STD10', 'STD20', 'STD30', 'STD60', 'BETA5', 'BETA10', 'BETA20', 'BETA30', 'BETA60', 'RSQR5', 'RSQR10', 'RSQR20', 'RSQR30', 'RSQR60', 'RESI5', 'RESI10', 'RESI20', 'RESI30', 'RESI60', 'MAX5', 'MAX10', 'MAX20', 'MAX30', 'MAX60', 'MIN5', 'MIN10', 'MIN20', 'MIN30', 'MIN60', 'QTLU5', 'QTLU10', 'QTLU20', 'QTLU30', 'QTLU60', 'QTLD5', 'QTLD10', 'QTLD20', 'QTLD30', 'QTLD60', 'RANK5', 'RANK10', 'RANK20', 'RANK30', 'RANK60', 'RSV5', 'RSV10', 'RSV20', 'RSV30', 'RSV60', 'IMAX5', 'IMAX10', 'IMAX20', 'IMAX30', 'IMAX60', 'IMIN5', 'IMIN10', 'IMIN20', 'IMIN30', 'IMIN60', 'IMXD5', 'IMXD10', 'IMXD20', 'IMXD30', 'IMXD60', 'CORR5', 'CORR10', 'CORR20', 'CORR30', 'CORR60', 'CORD5', 'CORD10', 'CORD20', 'CORD30', 'CORD60', 'CNTP5', 'CNTP10', 'CNTP20', 'CNTP30', 'CNTP60', 'CNTN5', 'CNTN10', 'CNTN20', 'CNTN30', 'CNTN60', 'CNTD5', 'CNTD10', 'CNTD20', 'CNTD30', 'CNTD60', 'SUMP5', 'SUMP10', 'SUMP20', 'SUMP30', 'SUMP60', 'SUMN5', 'SUMN10', 'SUMN20', 'SUMN30', 'SUMN60', 'SUMD5', 'SUMD10', 'SUMD20', 'SUMD30', 'SUMD60', 'VMA5', 'VMA10', 'VMA20', 'VMA30', 'VMA60', 'VSTD5', 'VSTD10', 'VSTD20', 'VSTD30', 'VSTD60', 'WVMA5', 'WVMA10', 'WVMA20', 'WVMA30', 'WVMA60', 'VSUMP5', 'VSUMP10', 'VSUMP20', 'VSUMP30', 'VSUMP60', 'VSUMN5', 'VSUMN10', 'VSUMN20', 'VSUMN30', 'VSUMN60', 'VSUMD5', 'VSUMD10', 'VSUMD20', 'VSUMD30', 'VSUMD60',
+               'sma_5', 'sma_20', 'ema_12', 'ema_26', 'rsi', 'macd', 'macd_signal', 'volume_change', 'obv', 'volume_ma_5', 'volume_ma_20', 'volume_ratio', 'kdj_k', 'kdj_d', 'kdj_j', 'boll_mid', 'boll_std', 'atr_14', 'ema_60', 'volatility_10', 'volatility_20', 'return_1', 'return_5', 'return_10',  'high_low_spread', 'open_close_spread', 'high_close_spread', 'low_close_spread']
 }
 feature_engineer_func_map = {
     '39': engineer_features_39,
@@ -63,14 +65,15 @@ def _preprocess_common(df, stockid2idx, desc, drop_small_open=True):
     df = df.copy()
     df = df.sort_values(['股票代码', '日期']).reset_index(drop=True)
 
-    print(f"正在使用多进程进行{desc}...")
+    print(f"正在使用单进程进行{desc}...")
     groups = [group for _, group in df.groupby('股票代码', sort=False)]
     if len(groups) == 0:
         raise ValueError(f"{desc}输入为空，无法继续")
 
-    num_processes = min(10, mp.cpu_count())
-    with mp.Pool(processes=num_processes) as pool:
-        processed_list = list(tqdm(pool.imap(feature_engineer, groups), total=len(groups), desc=desc))
+    # 单进程模式，避免 Docker 共享内存死锁
+    processed_list = []
+    for group in tqdm(groups, desc=desc):
+        processed_list.append(feature_engineer(group))
 
     processed = pd.concat(processed_list).reset_index(drop=True)
 
@@ -169,6 +172,75 @@ class WeightedRankingLoss(nn.Module):
         total_loss = listwise + self.pairwise_weight * pairwise
         
         return total_loss
+
+
+class PairwiseRankingLoss(nn.Module):
+    """
+    纯 Pairwise 排序损失函数 - 方案C
+    核心思想：如果股票A的真实收益大于股票B，那么模型对A的打分也必须大于B
+    
+    与 y_true 是连续收益率不同，我们将其转换为"谁排名更高"的二元对比，
+    然后使用 Pairwise Cross Entropy Loss 强制模型学习相对排序。
+    """
+    
+    def __init__(self, margin=1.0, k=5):
+        """
+        margin: hinge loss 的间隔参数
+        k: top-k 样本权重倍增
+        """
+        super(PairwiseRankingLoss, self).__init__()
+        self.margin = margin
+        self.k = k
+    
+    def forward(self, y_pred, y_true):
+        """
+        y_pred: [batch, num_stocks] - 模型预测分数
+        y_true: [batch, num_stocks] - 真实收益率（5日收益）
+        
+        核心：同一 batch 内（同一天），对比所有股票对
+        """
+        batch_size, num_stocks = y_pred.size()
+        
+        # 1. 将 y_true 转换为排名（收益高的排名靠前）
+        # 使用 argsort 获得排序索引，然后转换为排名分数
+        _, sorted_indices = torch.sort(y_true, dim=1, descending=True)
+        
+        # 为每个样本创建排名分数（最高收益=num_stocks，最低=1）
+        ranking_scores = torch.zeros_like(y_true)
+        for i in range(batch_size):
+            for rank, idx in enumerate(sorted_indices[i]):
+                ranking_scores[i, idx] = num_stocks - rank
+        
+        # 2. 创建所有股票对 (i, j) 的比较
+        # pred_diff[i,j] = y_pred[i,i] - y_pred[i,j] 表示 i 比 j 高多少
+        # true_diff[i,j] = y_true[i,i] - y_true[i,j] 表示 i 的收益是否真的比 j 高
+        
+        # [batch, num_stocks, 1] - [batch, 1, num_stocks] = [batch, num_stocks, num_stocks]
+        pred_diff = y_pred.unsqueeze(2) - y_pred.unsqueeze(1)  # 预测差异
+        true_diff = y_true.unsqueeze(2) - y_true.unsqueeze(1)  # 真实收益差异
+        
+        # 3. 创建 mask：只考虑收益不同的股票对（避免处理平局）
+        # true_diff > 0 表示 i 收益高于 j
+        sign_matrix = torch.sign(true_diff)  # +1, 0, -1
+        
+        # 只保留收益有差异的对（sign != 0）
+        pair_mask = (sign_matrix != 0).float()
+        
+        # 4. 计算 Pairwise Loss
+        # 如果 true_diff > 0（i 比 j 好），则希望 pred_diff > 0（i 排名也更高）
+        # 使用 hinge loss: max(0, margin - pred_diff * sign(true_diff))
+        # 也就是：如果 sign > 0（i确实比j好），但 pred_diff < 0（模型认为j更好），则产生损失
+        
+        pairwise_hinge = torch.clamp(self.margin - pred_diff * sign_matrix, min=0)
+        
+        # 应用 mask 忽略平局
+        masked_loss = pairwise_hinge * pair_mask
+        
+        # 计算平均损失（只除以有效对数）
+        num_pairs = pair_mask.sum(dim=[1, 2]).clamp(min=1)
+        loss = (masked_loss.sum(dim=[1, 2]) / num_pairs).mean()
+        
+        return loss
 
 def calculate_ranking_metrics(y_pred, y_true, masks, k=5):
     """计算新的评估指标：Top 5 收益之和，以及与理论最高值和随机值的比值"""
@@ -295,7 +367,10 @@ def collate_fn(batch):
         padded_relevance.append(rel)
         padded_stock_indices.append(stock_idx)
         masks.append(mask)
-    
+
+    # V3: NO cross-sectional Z-score normalization - preserve absolute momentum signals
+    # Model learns cross-sectional ranking naturally through PairwiseRankingLoss
+
     return {
         'sequences': torch.stack(padded_sequences),      # [batch, max_stocks, seq_len, features]
         'targets': torch.stack(padded_targets),          # [batch, max_stocks]
@@ -305,19 +380,23 @@ def collate_fn(batch):
     }
 
 # 排序训练函数
-def train_ranking_model(model, dataloader, criterion, optimizer, device, epoch, writer):
+def train_ranking_model(model, dataloader, criterion, optimizer, device, epoch, writer, accumulation_steps=4):
+    """训练排序模型 with gradient accumulation support"""
     model.train()
     total_loss = 0
     total_metrics = {}
     local_step = 0
+    accumulated_loss = None
     
-    for batch in tqdm(dataloader, desc=f"Training Epoch {epoch+1}"):
+    for batch_idx, batch in enumerate(tqdm(dataloader, desc=f"Training Epoch {epoch+1}")):
         sequences = batch['sequences'].to(device)    # [batch, max_stocks, seq_len, features]
         targets = batch['targets'].to(device)        # [batch, max_stocks] 真实涨跌幅
         relevance = batch['relevance'].to(device)    # [batch, max_stocks] 预处理的相关性得分
         masks = batch['masks'].to(device)            # [batch, max_stocks] 有效位置mask
         
-        optimizer.zero_grad()
+        # Only zero grad at start of accumulation cycle (when batch_idx % accumulation_steps == 0)
+        if batch_idx % accumulation_steps == 0:
+            optimizer.zero_grad()
         
         # 模型预测
         outputs = model(sequences)  # [batch, max_stocks] 预测分数
@@ -351,15 +430,19 @@ def train_ranking_model(model, dataloader, criterion, optimizer, device, epoch, 
                 batch_loss = batch_loss + loss if isinstance(batch_loss, torch.Tensor) else loss
         
         if batch_loss is not None:
-            batch_loss = batch_loss / batch_size
+            batch_loss = batch_loss / accumulation_steps
             batch_loss.backward()
-            if not config.get('drop_clip', True):
-                grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), config['max_grad_norm'])
-                if writer:
-                    writer.add_scalar('train/grad_norm', grad_norm, global_step=epoch*len(dataloader)+local_step)
-            optimizer.step()
             
-            total_loss += batch_loss.item()
+            # Gradient accumulation: only step every accumulation_steps batches
+            if (batch_idx + 1) % accumulation_steps == 0:
+                if not config.get('drop_clip', True):
+                    grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), config['max_grad_norm'])
+                    if writer:
+                        writer.add_scalar('train/grad_norm', grad_norm, global_step=epoch*len(dataloader)+local_step)
+                optimizer.step()
+                optimizer.zero_grad()
+            
+            total_loss += batch_loss.item() * accumulation_steps
             
             # 计算评估指标
             with torch.no_grad():
@@ -637,28 +720,44 @@ def main():
     model.to(device)
     print(f"模型参数量: {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
     
-    # 7. 损失函数和优化器
-    criterion = WeightedRankingLoss(
-        k=5,
-        temperature=1.0,
-        weight_factor=config['top5_weight'],
-        pairwise_weight=config['pairwise_weight'],
-        base_weight=config.get('base_weight', 1.0)
-    )  # 使用加权排序损失
+    # 7. 损失函数 - 使用 PairwiseRankingLoss (方案C)
+    criterion = PairwiseRankingLoss(margin=config['margin'], k=5)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config['learning_rate'], weight_decay=1e-5)
-    scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.2, total_iters=config['num_epochs'])
+    
+    # 学习率预热 + 线性衰减
+    warmup_epochs = config.get('warmup_epochs', 2)
+    warmup_scheduler = torch.optim.lr_scheduler.LinearLR(
+        optimizer, 
+        start_factor=0.1,  # 预热开始时为目标学习率的10%
+        end_factor=1.0, 
+        total_iters=warmup_epochs
+    )
+    decay_scheduler = torch.optim.lr_scheduler.LinearLR(
+        optimizer,
+        start_factor=1.0,
+        end_factor=0.2,
+        total_iters=max(1, config['num_epochs'] - warmup_epochs)
+    )
+    scheduler = torch.optim.lr_scheduler.SequentialLR(
+        optimizer,
+        schedulers=[warmup_scheduler, decay_scheduler],
+        milestones=[warmup_epochs]
+    )
     
     # 8. 排序模型训练
     if is_train:
         best_score = -float('inf')
         best_epoch = -1
+        patience = config.get('early_stopping_patience', 10)  # 早停耐心值
+        counter = 0  # 跟踪验证集性能未提升的epoch数
         
         for epoch in range(config['num_epochs']):
             print(f"\n=== Epoch {epoch+1}/{config['num_epochs']} ===")
             
             # 训练
             train_loss, train_metrics = train_ranking_model(
-                model, train_loader, criterion, optimizer, device, epoch, writer
+                model, train_loader, criterion, optimizer, device, epoch, writer,
+                accumulation_steps=config.get('accumulation_steps', 4)
             )
             
             print(f"Train Loss: {train_loss:.4f}")
@@ -687,7 +786,20 @@ def main():
                 best_epoch = epoch + 1
                 torch.save(model.state_dict(), os.path.join(output_dir, 'best_model.pth'))
                 print(f"保存最佳模型 - final score: {best_score:.4f}")
+                counter = 0  # 重置早停计数器
+            else:
+                counter += 1  # 增加早停计数器
+                print(f"验证集性能未提升 ({counter}/{patience})")
+                if counter >= patience:
+                    print(f"\n早停触发：验证集性能连续 {patience} 个epoch未提升，停止训练")
+                    print(f"最佳模型来自 epoch {best_epoch}，final score: {best_score:.4f}")
+                    break
         print(f"\n训练完成！最佳 epoch: {best_epoch}, 最佳 final score: {best_score:.4f}")
+        
+        # 循环结束后，加载早停记录的最优模型权重
+        print(f"加载第 {best_epoch} 轮的最优权重...")
+        model.load_state_dict(torch.load(os.path.join(output_dir, 'best_model.pth')))
+        
         with open(os.path.join(output_dir, 'final_score.txt'), 'w') as f:
             f.write(f"Best epoch: {best_epoch}\\nBest final_score: {best_score:.6f}\\n")
 

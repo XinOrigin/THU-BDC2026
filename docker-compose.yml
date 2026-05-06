@@ -4,11 +4,21 @@ services:
     pull_policy: never
     volumes:
       - ./data:/app/data
-      - ./test/output:/app/output
+      - ./output:/app/output
       - ./temp:/app/temp
+      - ./models:/app/model
+      - .:/app  # 挂载整个项目目录，访问脚本
+      
+
     working_dir: /app
-    # 先临时替换命令，验证GPU是否能访问
-    command: /bin/bash /app/data/run.sh
+    ports:
+      - "6006:6006"
+      
+    # V3 守夜人训练入口
+    entrypoint: []
+    command: ["python", "-u", "run_v3_night.sh"]
+    tty: true
+
     # 核心配置：指定NVIDIA运行时+暴露GPU
     runtime: nvidia
     environment:

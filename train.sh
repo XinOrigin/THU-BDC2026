@@ -1,1 +1,1 @@
-python code/src/train.py
+python /app/code/src/train.py

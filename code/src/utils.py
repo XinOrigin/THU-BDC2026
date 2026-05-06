@@ -41,11 +41,51 @@ def engineer_features_158plus39(df):
     # 4. 处理可能因为合并产生的重复列（如果两个函数生成了同名特征）
     df_final = df_final.loc[:,~df_final.columns.duplicated()]
 
-    # 5. 统一处理inf和NaN
+    # 5. 统一处理inf和NaN（前向填充+后向填充替代直接填0）
     df_final.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df_final.fillna(0, inplace=True)
+    df_final = df_final.ffill().bfill()
+    # 保底：仍有NaN的列用0填充（极少情况）
+    df_final = df_final.fillna(0)
     
+    # 6. 【注意】截面排名特征不在此处计算
+    # 截面排名特征需要在全市场 concat 后统一计算
+    # 调用位置：train.py:_preprocess_common() 中 concat 之后
+    # 这样可以确保同一日期的所有股票数据都已汇总，能正确计算截面排名
+
     return df_final
+
+
+def add_cross_sectional_ranks(df):
+    """
+    为每一天添加截面排名特征。
+    这让模型能够感知"当天哪些股票是热门/冷门"，而不只是个股技术指标。
+    """
+    # 确定日期列名和股票代码列名
+    date_col = '日期' if '日期' in df.columns else 'datetime'
+    stock_col = 'instrument' if 'instrument' in df.columns else '股票代码'
+    
+    if date_col not in df.columns:
+        return df
+    
+    # 需要生成截面排名的基础特征
+    rank_base_cols = ['成交量', '成交额', '涨跌幅', '换手率']
+    
+    # 添加截面排名特征
+    for col in rank_base_cols:
+        if col in df.columns:
+            # 计算截面排名（百分位）
+            df[f'{col}_rank'] = df.groupby(date_col)[col].rank(pct=True)
+    
+    # 添加截面排名变化（滚动差分）- 使用合适的股票代码列
+    for col in ['涨跌幅_rank', '成交量_rank', '换手率_rank']:
+        if col in df.columns:
+            df[f'{col}_change'] = df.groupby(stock_col)[col].diff()
+    
+    # 【关键修复】清除所有 NaN 和 inf，确保无毒数据进入模型
+    df.replace([np.inf, -np.inf], np.nan, inplace=True)
+    df = df.fillna(0)
+    
+    return df
 
 def engineer_features_39(df):
     """
@@ -127,8 +167,9 @@ def engineer_features_39(df):
     # 处理 inf 和 -inf
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
 
-    # 填充 NaN 值（注意：这可能引入偏差，根据下游任务决定是否保留）
-    df.fillna(0, inplace=True)
+    # 填充 NaN 值（前向填充+后向填充替代直接填0）
+    df = df.ffill().bfill()
+    df = df.fillna(0)  # 保底
 
     return df
 
@@ -353,9 +394,10 @@ def engineer_features(df):
     # Merge with original df
     df = pd.concat([df, feature_df], axis=1)
     
-    # 填充缺失值
+    # 填充缺失值（前向填充+后向填充替代直接填0）
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df.fillna(0, inplace=True)
+    df = df.ffill().bfill()
+    df = df.fillna(0)  # 保底
     return df
 def process_single_stock(stock_row, data, features, sequence_length, date):
     """处理单只股票的数据，返回序列、目标值和股票索引"""

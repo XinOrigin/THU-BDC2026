@@ -96,6 +96,7 @@ class StockTransformer(nn.Module):
         # 最终排序分数输出
         self.score_head = nn.Sequential(
             nn.Linear(config['d_model'] // 2, config['d_model'] // 4),
+            nn.LayerNorm(config['d_model'] // 4),  # 新增：稳定输出方差
             nn.ReLU(),
             nn.Dropout(config['dropout'] * 0.5),
             nn.Linear(config['d_model'] // 4, 1)
@@ -112,8 +113,9 @@ class StockTransformer(nn.Module):
                 if module.bias is not None:
                     nn.init.zeros_(module.bias)
     
-    def forward(self, src):
-        # src: [batch, num_stocks, seq_len, feature_dim]
+    def forward(self, src, src_key_padding_mask=None):
+        # src: [batch(批次大小抽出多少个交易日), num_stocks（股票池大小）, seq_len（序列长度回看多少天）, feature_dim（158+39个特征）]
+        # src_key_padding_mask: [batch*num_stocks, seq_len] - True for padded positions
         batch_size, num_stocks, seq_len, feature_dim = src.size()
         
         # 重塑为 [batch*num_stocks, seq_len, feature_dim]
@@ -123,8 +125,8 @@ class StockTransformer(nn.Module):
         src_proj = self.input_proj(src_reshaped)  # [batch*num_stocks, seq_len, d_model]
         src_proj = self.pos_encoder(src_proj)
         
-        # 时序特征提取
-        temporal_features = self.temporal_encoder(src_proj)  # [batch*num_stocks, seq_len, d_model]
+        # 时序特征提取（传入 padding mask）
+        temporal_features = self.temporal_encoder(src_proj, src_key_padding_mask=src_key_padding_mask)  # [batch*num_stocks, seq_len, d_model]
         
         # 特征注意力聚合
         aggregated_features = self.feature_attention(temporal_features)  # [batch*num_stocks, d_model]

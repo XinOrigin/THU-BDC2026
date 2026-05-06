@@ -1,1 +1,1 @@
-python code/src/predict.py
+python /app/code/src/predict.py
